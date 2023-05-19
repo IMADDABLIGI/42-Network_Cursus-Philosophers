@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 14:07:47 by idabligi          #+#    #+#             */
-/*   Updated: 2023/03/07 15:00:17 by idabligi         ###   ########.fr       */
+/*   Created: 2023/05/19 21:28:24 by idabligi          #+#    #+#             */
+/*   Updated: 2023/05/19 21:55:55 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 
-typedef	struct	data
+typedef struct	data
 {
-	int		nb_p;
-	int		tt_d;
-	int		tt_e;
-	int		tt_s;
-	int		nb_tpe;
-}	t_data;
-
-void	ft_fill(t_data *data, char *str1, char *str2, char *str3);
-void	ft_fill2(t_data *data, char *str4, char *str5);
+	int		philo;
+}		t_list;
 
 #endif
