@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/19 21:28:24 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/20 16:18:17 by idabligi         ###   ########.fr       */
+/*   Created: 2023/05/27 14:22:32 by idabligi          #+#    #+#             */
+/*   Updated: 2023/05/27 14:53:40 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef PHILO_H
-# define PHILO_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
 
-typedef struct	data
+void *func()
 {
-	int				i;
-	pthread_mutex_t	lock;
-}		t_list;
+	int value;
+	int *res;
+	
+	value = 50;
+	printf("hello how are u \n");
+	res = malloc(sizeof(int));
+	*res = value;
+	printf("    %p\n", res);
+	return res;
+}
 
-#endif
+int main()
+{
+	pthread_t a;
+	int	*check;
+
+	pthread_create(&a, NULL, &func, NULL);
+	pthread_join(a, (void *)&check);
+	
+	printf("    %p\n\n", check);
+	printf("%d", *check);
+}
