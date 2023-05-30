@@ -6,43 +6,37 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:41:36 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/27 14:22:04 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:13:47 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*print(void *arg)
-{
-	t_list	*data;
-	int		i = 0;
-
-	data = (t_list *)arg;
-		pthread_mutex_lock(&data->lock);
-	while (i < 5000000)
-	{
-		data->i++;
-		i++;
-	}
-	printf("sum : |%d|\n", data->i);
-		pthread_mutex_unlock(&data->lock);
-	return (NULL);
-}
-
 int main(int ac, char **av)
 {
-	t_list		data;
-	pthread_t	t[2];
+	t_list	*philo;
+	t_list	*tmp;
+	t_data	data;
 	int i = 0;
 
-	data.i = 0;
-	pthread_mutex_init(&data.lock, NULL);
-
-	pthread_create(&t[0], NULL, &print, (void *)&data);
-	pthread_create(&t[1], NULL, &print, (void *)&data);
-
-	pthread_join(t[0], NULL);
-	pthread_join(t[1], NULL);
-    pthread_mutex_destroy(&data.lock);
+	if (ac < 5)
+		ft_abort(2);
+	philo = ft_parsing(NULL, av, &data);
+	tmp = philo;
+	while (i < ft_atoi(av[1]))
+	{
+		pthread_create(&philo->t, NULL, &execute, philo);
+		philo = philo->next;
+		i++;
+	}
+	i = 0;
+	while(i < ft_atoi(av[1]))
+	{
+		// pthread_detach(tmp->t);
+		pthread_join(tmp->t, NULL);
+		pthread_mutex_destroy(&tmp->fork);
+		tmp = tmp->next;
+		i++;
+	}
 	return (0);
 }

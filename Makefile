@@ -6,7 +6,7 @@
 #    By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/19 21:33:48 by idabligi          #+#    #+#              #
-#    Updated: 2023/05/20 13:41:44 by idabligi         ###   ########.fr        #
+#    Updated: 2023/05/30 17:07:36 by idabligi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ COLOUR_RESET= \033[1;0m
 COLOUR_RED=\033[1;31m
 
 
-FLS = threads\
+FLS = threads philo_utils lst_functions ft_parsing ft_execute\
 
 FO = $(FLS:=.o)
 
