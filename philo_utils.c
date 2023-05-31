@@ -6,11 +6,13 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:27:34 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/30 13:35:39 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:40:40 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+//----------------------------------------------------------------------------//
 
 void	ft_abort(int id)
 {
@@ -20,6 +22,24 @@ void	ft_abort(int id)
 		printf("\e[1;31mArgument please!\n\e[0m");
 	exit(1);
 }
+
+void	ft_destroy(t_list *philo, int i, int limit)
+{
+	pthread_mutex_destroy(&philo->data->dead);
+	pthread_mutex_destroy(&philo->data->exit);
+	pthread_mutex_destroy(&philo->data->print);
+	pthread_mutex_destroy(&philo->data->eating);
+	while(i < limit)
+	{
+		pthread_mutex_destroy(&philo->fork);
+		pthread_mutex_destroy(&philo->sleep);
+        pthread_detach(philo->t);
+		philo = philo->next;
+		i++;
+	}
+}
+
+//----------------------------------------------------------------------------//
 
 int	ft_atoi(char *str)
 {
