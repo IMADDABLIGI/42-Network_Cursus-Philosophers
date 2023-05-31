@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:45:57 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 15:19:33 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:29:49 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ t_list	*ft_lstnew(int content)
 	nude->id = content;
     nude->l_meal = ft_get_time();
     pthread_mutex_init(&nude->fork, NULL);
-    pthread_mutex_init(&nude->sleep, NULL);
-    // pthread_mutex_init(&nude->eating, NULL);
+    pthread_mutex_init(&nude->eat, NULL);
 	nude->next = NULL;
 	return (nude);
 }

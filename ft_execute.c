@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:04:50 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 15:52:23 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:42:56 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_printf(char *str, t_list *philo)
 {
 	pthread_mutex_lock(&philo->data->print);
 	if (philo->data->is_dead)
-		printf("%lld %d %s", (ft_get_time() - philo->data->bg_time), philo->id, str);
+    	printf("%lld %d %s", (ft_get_time() - philo->data->bg_time), philo->id, str);
 	pthread_mutex_unlock(&philo->data->print);
 }
 
@@ -61,10 +61,10 @@ int	ft_check_dead(t_list *philo)
 
 int	ft_check_exit(t_list *philo)
 {
-	pthread_mutex_lock(&philo->data->exit);
+	pthread_mutex_lock(&philo->data->dead);
 	if (!philo->data->is_dead)
 		return (0);
-	pthread_mutex_unlock(&philo->data->exit);
+	pthread_mutex_unlock(&philo->data->dead);
 	return (1);
 }
 
@@ -87,12 +87,10 @@ void	*execute(void *arg)
 			break ;
 		pthread_mutex_lock(&philo->next->fork);
 		ft_printf("has taken a fork\n", philo);
-		
-		pthread_mutex_lock(&philo->sleep);
+		pthread_mutex_lock(&philo->eat);
 		ft_printf("is eating\n", philo);
 		ft_usleep(philo, philo->data->t_eat, 1);
-		pthread_mutex_unlock(&philo->sleep);
-		
+		pthread_mutex_unlock(&philo->eat);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		ft_printf("is sleeping\n", philo);
