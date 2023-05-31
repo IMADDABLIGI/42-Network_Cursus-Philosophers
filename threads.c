@@ -6,13 +6,31 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:41:36 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 17:41:21 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:42:10 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int ac, char **av)
+//----------------------------------------------------------------------------//
+
+int	ft_check_dead(t_list *philo, long long t_dead)
+{
+	pthread_mutex_lock(&philo->sleep);
+	if (((ft_get_time()) - philo->l_meal) > philo->data->t_die)
+	{
+		philo->data->is_dead = 0;
+		t_dead = (ft_get_time() - philo->data->bg_time);
+		printf("%lld %d died\n", t_dead, philo->id);
+		return (0);
+	}
+	pthread_mutex_unlock(&philo->sleep);
+	return (1);
+}
+
+//----------------------------------------------------------------------------//
+
+int	main(int ac, char **av)
 {
 	t_list	*philo;
 	t_list	*philo2;
@@ -35,11 +53,13 @@ int main(int ac, char **av)
 	while (1)
 	{
 		pthread_mutex_lock(&philo2->eat);
-		if (!ft_check_dead(philo2))
-			break ;
+		if (!ft_check_dead(philo2, 0))
+		{
+			ft_destroy(tmp, 0, ft_atoi(av[1]));
+			return (1);
+		}
 		pthread_mutex_unlock(&philo2->eat);
 		philo2 = philo2->next;
 	}
-	ft_destroy(tmp, 0, ft_atoi(av[1]));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:11:30 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 17:22:16 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:17:25 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ t_list	*ft_parsing(t_list *philo, char **av, t_data *data)
 	t_list	*tmp;
 
 	i = 0;
-    pthread_mutex_init(&data->dead, NULL);
     pthread_mutex_init(&data->print, NULL);
-    pthread_mutex_init(&data->eating, NULL);
 	while (i < ft_atoi(av[1]))
 	{
 		philo = ft_lstadd_back(philo, ft_lstnew(i + 1));

@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 21:28:24 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 17:38:14 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:42:45 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@
 
 typedef struct	data
 {
+	long long			bg_time;
 	int					t_die;
 	int					t_eat;
-	long long			bg_time;
-	int					is_dead;
 	int					t_sleep;
+	int					is_dead;
 	int					et_count;
-	pthread_mutex_t		eating;
-	pthread_mutex_t		dead;
 	pthread_mutex_t		print;
 }	t_data;
 
@@ -37,8 +35,9 @@ typedef struct	l_data
 	int					id;
 	long long			l_meal;
 	pthread_t			t;
-	pthread_mutex_t		fork;
 	pthread_mutex_t	    eat;
+	pthread_mutex_t		fork;
+	pthread_mutex_t	    sleep;
 	t_data				*data;
 	struct l_data		*next;
 }	t_list;
@@ -51,7 +50,7 @@ t_list		*ft_lstnew(int content);
 t_list		*ft_lstlast(t_list *lst);
 t_list		*ft_lstadd_back(t_list *lst, t_list *new);
 t_list		*ft_parsing(t_list *philo, char **av, t_data *data);
-int			ft_check_dead(t_list *philo);
+int			ft_check_dead(t_list *philo, long long t_dead);
 void		ft_destroy(t_list *philo, int i, int limit);
 
 #endif
