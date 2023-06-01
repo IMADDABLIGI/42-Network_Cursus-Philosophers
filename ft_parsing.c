@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:11:30 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 19:17:25 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:57:00 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ t_list	*ft_get_data(t_list *philo, t_list *tmp, char **str, t_data *data)
 	data->t_die = ft_atoi(str[2]);
 	data->t_eat = ft_atoi(str[3]);
 	data->t_sleep = ft_atoi(str[4]);
-	if (str[5])
-		data->et_count = ft_atoi(str[5]);
-	else
-		data->et_count = 0;
 	while (philo)
 	{
 		philo->data = data;
@@ -54,6 +50,7 @@ t_list	*ft_parsing(t_list *philo, char **av, t_data *data)
 
 	i = 0;
     pthread_mutex_init(&data->print, NULL);
+    pthread_mutex_init(&data->cnt_eat, NULL);
 	while (i < ft_atoi(av[1]))
 	{
 		philo = ft_lstadd_back(philo, ft_lstnew(i + 1));

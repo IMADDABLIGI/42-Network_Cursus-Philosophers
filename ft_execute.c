@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:04:50 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 19:41:27 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:00:19 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	ft_usleep(t_list *philo, long long timeof, int check)
 		philo->l_meal = ft_get_time();
 		while (ft_get_time() < time)
 			usleep(50);
+			
+		pthread_mutex_lock(&philo->data->cnt_eat);
+		philo->count_e++;
+		pthread_mutex_unlock(&philo->data->cnt_eat);
+	
 		pthread_mutex_unlock(&philo->sleep);
 	}
 	else
@@ -62,10 +67,14 @@ void	*execute(void *arg)
 		ft_printf("has taken a fork\n", philo, 0);
 		pthread_mutex_lock(&philo->next->fork);
 		ft_printf("has taken a fork\n", philo, 0);
+
 		pthread_mutex_lock(&philo->eat);
+		philo->check_eat = 1;
 		ft_printf("is eating\n", philo, 0);
 		ft_usleep(philo, philo->data->t_eat, 1);
+		philo->check_eat = 0;
 		pthread_mutex_unlock(&philo->eat);
+		
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		ft_printf("is sleeping\n", philo, 0);

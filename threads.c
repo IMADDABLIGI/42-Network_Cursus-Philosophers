@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:41:36 by idabligi          #+#    #+#             */
-/*   Updated: 2023/05/31 19:42:10 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:00:49 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,36 @@ int	ft_check_dead(t_list *philo, long long t_dead)
 
 //----------------------------------------------------------------------------//
 
+int	ft_check_count(t_list *philo, char **av, int limit)
+{
+	int i = 0;
+	int count = 0;
+	int	done;
+
+	if (!av[5])
+		return (1);
+	done = ft_atoi(av[5]);
+	pthread_mutex_lock(&philo->data->cnt_eat);
+	while (i < limit)
+	{
+		if (philo->count_e >= done)
+			count++;
+		else
+		{
+			pthread_mutex_unlock(&philo->data->cnt_eat);
+			return (1);
+		}
+		philo = philo->next;
+		i++;
+	}
+	pthread_mutex_unlock(&philo->data->cnt_eat);
+	if (count == limit)
+		return (0);
+	return (1);
+}
+
+//----------------------------------------------------------------------------//
+
 int	main(int ac, char **av)
 {
 	t_list	*philo;
@@ -38,7 +68,7 @@ int	main(int ac, char **av)
 	t_data	data;
 	int i = 0;
 
-	if (ac < 5)
+	if (ac < 5 || !ft_atoi(av[1]))
 		ft_abort(2);
 	philo = ft_parsing(NULL, av, &data);
 	tmp = philo;
@@ -52,8 +82,11 @@ int	main(int ac, char **av)
 	i = 0;
 	while (1)
 	{
+		usleep(50);
+		if (philo2->check_eat)
+			philo2 = philo2->next;
 		pthread_mutex_lock(&philo2->eat);
-		if (!ft_check_dead(philo2, 0))
+		if (!ft_check_dead(philo2, 0) || !ft_check_count(tmp, av, ft_atoi(av[1])))
 		{
 			ft_destroy(tmp, 0, ft_atoi(av[1]));
 			return (1);
