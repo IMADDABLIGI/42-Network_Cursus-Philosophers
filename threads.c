@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:41:36 by idabligi          #+#    #+#             */
-/*   Updated: 2023/06/01 12:00:49 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:47:03 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_check_dead(t_list *philo, long long t_dead)
 		philo->data->is_dead = 0;
 		t_dead = (ft_get_time() - philo->data->bg_time);
 		printf("%lld %d died\n", t_dead, philo->id);
+		pthread_mutex_unlock(&philo->sleep);
 		return (0);
 	}
 	pthread_mutex_unlock(&philo->sleep);
@@ -30,12 +31,12 @@ int	ft_check_dead(t_list *philo, long long t_dead)
 
 //----------------------------------------------------------------------------//
 
-int	ft_check_count(t_list *philo, char **av, int limit)
+int	ft_check_count(t_list *philo, char **av, int limit, int count)
 {
-	int i = 0;
-	int count = 0;
+	int	i;
 	int	done;
 
+	i = 0;
 	if (!av[5])
 		return (1);
 	done = ft_atoi(av[5]);
@@ -60,19 +61,42 @@ int	ft_check_count(t_list *philo, char **av, int limit)
 
 //----------------------------------------------------------------------------//
 
+int	ft_end_thread(t_list *philo, t_list *tmp, char **av)
+{
+	while (1)
+	{
+		usleep(50);
+		if (philo->check_eat)
+			philo = philo->next;
+		if (!ft_check_dead(philo, 0))
+		{
+			ft_destroy(tmp, 0, ft_atoi(av[1]));
+			return (1);
+		}
+		if (!ft_check_count(tmp, av, ft_atoi(av[1]), 0))
+		{
+			ft_destroy(tmp, 0, ft_atoi(av[1]));
+			return (0);
+		}
+		philo = philo->next;
+	}
+	return (0);
+}
+
+//----------------------------------------------------------------------------//
+
 int	main(int ac, char **av)
 {
-	t_list	*philo;
-	t_list	*philo2;
-	t_list	*tmp;
 	t_data	data;
-	int i = 0;
+	t_list	*philo;
+	t_list	*tmp;
+	int		i;
 
-	if (ac < 5 || !ft_atoi(av[1]))
+	i = 0;
+	if (ac < 5 || ac > 6 || !ft_atoi(av[1]))
 		ft_abort(2);
 	philo = ft_parsing(NULL, av, &data);
 	tmp = philo;
-	philo2 = philo;
 	while (i < ft_atoi(av[1]))
 	{
 		pthread_create(&philo->t, NULL, &execute, philo);
@@ -80,19 +104,7 @@ int	main(int ac, char **av)
 		i++;
 	}
 	i = 0;
-	while (1)
-	{
-		usleep(50);
-		if (philo2->check_eat)
-			philo2 = philo2->next;
-		pthread_mutex_lock(&philo2->eat);
-		if (!ft_check_dead(philo2, 0) || !ft_check_count(tmp, av, ft_atoi(av[1])))
-		{
-			ft_destroy(tmp, 0, ft_atoi(av[1]));
-			return (1);
-		}
-		pthread_mutex_unlock(&philo2->eat);
-		philo2 = philo2->next;
-	}
+	if (ft_end_thread(tmp, tmp, av))
+		return (1);
 	return (0);
 }

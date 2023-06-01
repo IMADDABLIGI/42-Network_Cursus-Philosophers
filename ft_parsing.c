@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:11:30 by idabligi          #+#    #+#             */
-/*   Updated: 2023/06/01 11:57:00 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:42:24 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ long long	ft_get_time(void)
 
 t_list	*ft_get_data(t_list *philo, t_list *tmp, char **str, t_data *data)
 {
-    data->is_dead = 1;
+	data->is_dead = 1;
 	data->t_die = ft_atoi(str[2]);
 	data->t_eat = ft_atoi(str[3]);
 	data->t_sleep = ft_atoi(str[4]);
+	if (data->t_die < 60 || data->t_eat < 60 || data->t_sleep < 60)
+		ft_abort(1);
 	while (philo)
 	{
 		philo->data = data;
@@ -45,12 +47,12 @@ t_list	*ft_get_data(t_list *philo, t_list *tmp, char **str, t_data *data)
 
 t_list	*ft_parsing(t_list *philo, char **av, t_data *data)
 {
-	int 	i;
+	int		i;
 	t_list	*tmp;
 
 	i = 0;
-    pthread_mutex_init(&data->print, NULL);
-    pthread_mutex_init(&data->cnt_eat, NULL);
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->cnt_eat, NULL);
 	while (i < ft_atoi(av[1]))
 	{
 		philo = ft_lstadd_back(philo, ft_lstnew(i + 1));

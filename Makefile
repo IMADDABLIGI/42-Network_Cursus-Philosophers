@@ -6,14 +6,14 @@
 #    By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/19 21:33:48 by idabligi          #+#    #+#              #
-#    Updated: 2023/05/30 17:07:36 by idabligi         ###   ########.fr        #
+#    Updated: 2023/06/01 13:25:56 by idabligi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
 HEADER = philo.h
-FLAGS =  -Wall -Wextra -Werror
+FLAGS =  -Wall -Wextra -Werror -g -fsanitize=thread
 RM = rm -f
 COLOUR_GREEN=\033[1;32m
 COLOUR_RESET= \033[1;0m

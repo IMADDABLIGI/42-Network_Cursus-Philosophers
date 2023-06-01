@@ -6,20 +6,20 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 21:28:24 by idabligi          #+#    #+#             */
-/*   Updated: 2023/06/01 11:55:21 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/01 14:58:54 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <sys/time.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <pthread.h>
+# include <sys/time.h>
 
-typedef struct	data
+typedef struct data
 {
 	long long			bg_time;
 	int					t_die;
@@ -30,16 +30,15 @@ typedef struct	data
 	pthread_mutex_t		cnt_eat;
 }	t_data;
 
-typedef struct	l_data
+typedef struct l_data
 {
 	int					id;
 	int					check_eat;
 	int					count_e;
 	long long			l_meal;
 	pthread_t			t;
-	pthread_mutex_t	    eat;
 	pthread_mutex_t		fork;
-	pthread_mutex_t	    sleep;
+	pthread_mutex_t		sleep;
 	t_data				*data;
 	struct l_data		*next;
 }	t_list;
