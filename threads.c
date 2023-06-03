@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:41:36 by idabligi          #+#    #+#             */
-/*   Updated: 2023/06/01 15:47:03 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:39:44 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,46 @@
 
 int	ft_check_dead(t_list *philo, long long t_dead)
 {
-	pthread_mutex_lock(&philo->sleep);
+	pthread_mutex_lock(&philo->meal);
 	if (((ft_get_time()) - philo->l_meal) > philo->data->t_die)
 	{
-		philo->data->is_dead = 0;
+		pthread_mutex_lock(&philo->data->dead);
 		t_dead = (ft_get_time() - philo->data->bg_time);
 		printf("%lld %d died\n", t_dead, philo->id);
-		pthread_mutex_unlock(&philo->sleep);
 		return (0);
 	}
-	pthread_mutex_unlock(&philo->sleep);
+	pthread_mutex_unlock(&philo->meal);
 	return (1);
 }
 
 //----------------------------------------------------------------------------//
 
-int	ft_check_count(t_list *philo, char **av, int limit, int count)
+int	ft_check_count(t_list *philo, char **av, int i, int count)
 {
-	int	i;
 	int	done;
 
-	i = 0;
-	if (!av[5])
-		return (1);
-	done = ft_atoi(av[5]);
-	pthread_mutex_lock(&philo->data->cnt_eat);
-	while (i < limit)
+	if (av[5])
 	{
-		if (philo->count_e >= done)
-			count++;
-		else
+		done = ft_atoi(av[5]);
+		pthread_mutex_lock(&philo->data->stop);
+		while (i < ft_atoi(av[1]))
 		{
-			pthread_mutex_unlock(&philo->data->cnt_eat);
-			return (1);
+			pthread_mutex_lock(&philo->cnt_eat);
+			if (philo->count_e >= done)
+				count++;
+			else
+			{
+				pthread_mutex_unlock(&philo->cnt_eat);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->cnt_eat);
+			philo = philo->next;
+			i++;
 		}
-		philo = philo->next;
-		i++;
+		pthread_mutex_unlock(&philo->data->stop);
+		if (count == ft_atoi(av[1]))
+			return (0);
 	}
-	pthread_mutex_unlock(&philo->data->cnt_eat);
-	if (count == limit)
-		return (0);
 	return (1);
 }
 
@@ -65,19 +65,18 @@ int	ft_end_thread(t_list *philo, t_list *tmp, char **av)
 {
 	while (1)
 	{
-		usleep(50);
-		if (philo->check_eat)
-			philo = philo->next;
+		if (!ft_check_count(tmp, av, 0, 0))
+		{
+			ft_destroy(tmp, 0, ft_atoi(av[1]));
+			return (0);
+		}
+		pthread_mutex_lock(&philo->eat);
 		if (!ft_check_dead(philo, 0))
 		{
 			ft_destroy(tmp, 0, ft_atoi(av[1]));
 			return (1);
 		}
-		if (!ft_check_count(tmp, av, ft_atoi(av[1]), 0))
-		{
-			ft_destroy(tmp, 0, ft_atoi(av[1]));
-			return (0);
-		}
+		pthread_mutex_unlock(&philo->eat);
 		philo = philo->next;
 	}
 	return (0);

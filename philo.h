@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 21:28:24 by idabligi          #+#    #+#             */
-/*   Updated: 2023/06/01 14:58:54 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:39:42 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,21 @@ typedef struct data
 	int					t_die;
 	int					t_eat;
 	int					t_sleep;
-	int					is_dead;
+	pthread_mutex_t		dead;
 	pthread_mutex_t		print;
-	pthread_mutex_t		cnt_eat;
+	pthread_mutex_t		stop;
 }	t_data;
 
 typedef struct l_data
 {
 	int					id;
-	int					check_eat;
 	int					count_e;
 	long long			l_meal;
 	pthread_t			t;
+	pthread_mutex_t		eat;
 	pthread_mutex_t		fork;
-	pthread_mutex_t		sleep;
+	pthread_mutex_t		meal;
+	pthread_mutex_t		cnt_eat;
 	t_data				*data;
 	struct l_data		*next;
 }	t_list;

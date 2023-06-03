@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:27:34 by idabligi          #+#    #+#             */
-/*   Updated: 2023/06/01 15:39:49 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:39:38 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,19 @@ void	ft_abort(int id)
 
 void	ft_destroy(t_list *philo, int i, int limit)
 {
-	pthread_mutex_destroy(&philo->data->print);
-	pthread_mutex_destroy(&philo->data->cnt_eat);
 	while (i < limit)
 	{
-		pthread_mutex_destroy(&philo->fork);
-		pthread_mutex_destroy(&philo->sleep);
 		pthread_detach(philo->t);
+		pthread_mutex_destroy(&philo->eat);
+		pthread_mutex_destroy(&philo->fork);
+		pthread_mutex_destroy(&philo->meal);
+		pthread_mutex_destroy(&philo->cnt_eat);
 		philo = philo->next;
 		i++;
 	}
+	pthread_mutex_destroy(&philo->data->print);
+	pthread_mutex_destroy(&philo->data->dead);
+	pthread_mutex_destroy(&philo->data->stop);
 }
 
 //----------------------------------------------------------------------------//
@@ -44,7 +47,6 @@ void	ft_destroy(t_list *philo, int i, int limit)
 int	ft_atoi(char *str)
 {
 	int				i;
-	int				sign;
 	unsigned long	rst;
 
 	i = 0;

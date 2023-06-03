@@ -6,7 +6,7 @@
 /*   By: idabligi <idabligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:04:50 by idabligi          #+#    #+#             */
-/*   Updated: 2023/06/01 15:18:21 by idabligi         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:39:30 by idabligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,37 +17,41 @@
 void	ft_printf(char *str, t_list *philo, long long time)
 {
 	pthread_mutex_lock(&philo->data->print);
-	if (philo->data->is_dead)
-	{
-		time = ft_get_time() - philo->data->bg_time;
-		printf("%lld %d %s", time, philo->id, str);
-	}
+	pthread_mutex_lock(&philo->data->dead);
+	time = ft_get_time() - philo->data->bg_time;
+	printf("%lld %d %s", time, philo->id, str);
+	pthread_mutex_unlock(&philo->data->dead);
 	pthread_mutex_unlock(&philo->data->print);
 }
 
 //----------------------------------------------------------------------------//
 
-void	ft_usleep(t_list *philo, long long timeof, int check)
+void	ft_usleep1(t_list *philo, long long timeof)
 {
 	long long	time;
 
-	pthread_mutex_lock(&philo->sleep);
 	time = ft_get_time() + timeof;
-	if (check)
-	{
-		philo->l_meal = ft_get_time();
-		while (ft_get_time() < time)
-			usleep(50);
-		pthread_mutex_lock(&philo->data->cnt_eat);
-		philo->count_e++;
-		pthread_mutex_unlock(&philo->data->cnt_eat);
-	}
-	else
-	{
-		while (ft_get_time() < time)
-			usleep(50);
-	}
-	pthread_mutex_unlock(&philo->sleep);
+	pthread_mutex_lock(&philo->meal);
+	philo->l_meal = ft_get_time();
+	pthread_mutex_unlock(&philo->meal);
+	pthread_mutex_lock(&philo->data->stop);
+	while (ft_get_time() < time)
+		usleep(50);
+	pthread_mutex_lock(&philo->cnt_eat);
+	philo->count_e++;
+	pthread_mutex_unlock(&philo->cnt_eat);
+	pthread_mutex_unlock(&philo->data->stop);
+}
+
+//----------------------------------------------------------------------------//
+
+void	ft_usleep2(long long timeof)
+{
+	long long	time;
+
+	time = ft_get_time() + timeof;
+	while (ft_get_time() < time)
+		usleep(50);
 }
 
 //----------------------------------------------------------------------------//
@@ -65,14 +69,14 @@ void	*execute(void *arg)
 		ft_printf("has taken a fork\n", philo, 0);
 		pthread_mutex_lock(&philo->next->fork);
 		ft_printf("has taken a fork\n", philo, 0);
-		philo->check_eat = 1;
+		pthread_mutex_lock(&philo->eat);
 		ft_printf("is eating\n", philo, 0);
-		ft_usleep(philo, philo->data->t_eat, 1);
-		philo->check_eat = 0;
+		pthread_mutex_unlock(&philo->eat);
+		ft_usleep1(philo, philo->data->t_eat);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		ft_printf("is sleeping\n", philo, 0);
-		ft_usleep(philo, philo->data->t_sleep, 0);
+		ft_usleep2(philo->data->t_sleep);
 		ft_printf("is thinking\n", philo, 0);
 		usleep(50);
 	}
