@@ -57,4 +57,6 @@
 - Threads : http://www.compsci.hunter.cuny.edu/~sweiss/course_materials/unix_lecture_notes/chapter_10.pdf
 - Multithreading : https://beej.us/guide/bgc/html/split/multithreading.html
 - Explaining {Thread, Multithreading, Mutex, Semaphore} : https://www.notion.so/Philosophers-2b872948598e4f0cba91c66d8b5ba821
-- Video explaining The Dining Philosophers Problem : https://www.youtube.com/watch?v=FYUi-u7UWgw
+- Youtube playlist that covers Threads, Mutexes and Semaphores : https://www.youtube.com/watch?v=d9s_d28yJq0&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2&pp=iAQB
+- Youtube playlist about threads : https://www.youtube.com/watch?v=uA8X5zNOGw8&list=PL9IEJIKnBJjFZxuqyJ9JqVYmuFZHr7CFM
+- Youtube Video explaining The Dining Philosophers Problem : https://www.youtube.com/watch?v=FYUi-u7UWgw
