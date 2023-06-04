@@ -60,3 +60,4 @@
 - Youtube playlist that covers Threads, Mutexes and Semaphores : https://www.youtube.com/watchv=d9s_d28yJq0&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2&pp=iAQB
 - Youtube playlist about threads : https://www.youtube.com/watch?v=uA8X5zNOGw8&list=PL9IEJIKnBJjFZxuqyJ9JqVYmuFZHr7CFM
 - Youtube Video explaining The Dining Philosophers Problem : https://www.youtube.com/watch?v=FYUi-u7UWgw
+- Very simple web visualizer for Philosophers : https://nafuka11.github.io/philosophers-visualizer/
