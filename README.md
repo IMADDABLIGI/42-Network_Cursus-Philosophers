@@ -47,11 +47,11 @@
   Then, when one of the philosophers starves to death, the simulation ends.
 
 # Available Functions
- . memset, printf, malloc, free, write,
- . usleep, gettimeofday, pthread_create,
- . pthread_detach, pthread_join, pthread_mutex_init,
- . pthread_mutex_destroy, pthread_mutex_lock,
- . pthread_mutex_unlock.
+  memset, printf, malloc, free, write,
+  usleep, gettimeofday, pthread_create,
+  pthread_detach, pthread_join, pthread_mutex_init,
+  pthread_mutex_destroy, pthread_mutex_lock,
+  pthread_mutex_unlock.
 
 # Ressources
 - Threads : http://www.compsci.hunter.cuny.edu/~sweiss/course_materials/unix_lecture_notes/chapter_10.pdf
