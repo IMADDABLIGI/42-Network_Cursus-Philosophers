@@ -15,29 +15,28 @@
   After the philosopher has finished sleeping, he begins to think.
   The simulation stops when one philosopher dies.
 
-  - Arguments are given in the following order
-  Nubmer_of_philosophers : number of philosophers, number of forks.
-  Time_to_die : in milliseconds, die time_to_die milliseconds since the last meal or start of the simulation.
-  Time_to_eat : In milliseconds, how long it takes the philosopher to eat. Have 2 forks with you during this time.
-  Time_to_sleep : in milliseconds, how long it takes the philosopher to sleep.
-  Number_of_times_each_philosopher_must_eat: Optional, if all philosophers have eaten at least number_of_times_each_philosopher_muset_eat, the simulation ends.
+- Arguments are given in the following order
+  - Nubmer_of_philosophers : number of philosophers, number of forks.
+  - Time_to_die : in milliseconds, die time_to_die milliseconds since the last meal or start of the simulation.
+  - Time_to_eat : In milliseconds, how long it takes the philosopher to eat. Have 2 forks with you during this time.
+  - Time_to_sleep : in milliseconds, how long it takes the philosopher to sleep.
+  - Number_of_times_each_philosopher_must_eat: Optional, if all philosophers have eaten at least number_of_times_each_philosopher_muset_eat, the simulation ends.
 
-  - Each philosopher is given a number from 1 to number_of_philosophers
-  Philosopher N sits between N - 1 and N + 1. Philosopher 1 is next to number_of_philosophers.
+- Each philosopher is given a number from 1 to number_of_philosophers Philosopher N sits between N - 1 and N + 1. Philosopher 1 is next to number_of_philosophers.
 
-  - What the philosopher does is output as: (X is the philosopher number)
-  Timestamp_in_ms X has taken a fork.
-  Timestamp_in_ms X is eating.
-  Timestamp_in_ms X is sleeping.
-  Timestamp_in_ms X is thinking.
-  Timestamp_in_ms X died.
+- What the philosopher does is output as: (X is the philosopher number)
+  - Timestamp_in_ms X has taken a fork.
+  - Timestamp_in_ms X is eating.
+  - Timestamp_in_ms X is sleeping.
+  - Timestamp_in_ms X is thinking.
+  - Timestamp_in_ms X died.
 
-  - Output sentences must not overlap or intertwine with other sentences.
-  - When the philosopher dies, it shouldn't take more than 10 ms to actually print out.
-  - A philosopher must avoid dying.
-  - There is one fork between the philosophers.
-  - To prevent the fork from being copied, the state of the fork must be protected with a mutex.
-  - Each philosopher must be a thread.
+- Output sentences must not overlap or intertwine with other sentences.
+- When the philosopher dies, it shouldn't take more than 10 ms to actually print out.
+- A philosopher must avoid dying.
+- There is one fork between the philosophers.
+- To prevent the fork from being copied, the state of the fork must be protected with a mutex.
+- Each philosopher must be a thread.
 
 # Summary
   Philosophers are seated around a round table, with a fork between each philosopher.
