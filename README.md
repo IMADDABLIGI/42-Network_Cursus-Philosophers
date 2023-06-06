@@ -2,18 +2,18 @@
   Eat, Sleep, Spaghetti, repeat. This project is about learning how threads work by precisely timing a group of philosophers on when to pick up forks and eat spaghetti without dying from hunger, I learned how to create threads manage them and definitely how to perfectly use mutexes to succeed this project.
 
 # Rule
-  One or several philosophers sit at a round table and perform three actions. (Eating, thinking, sleeping).
-  If you are doing one action, you are not doing the rest.
-  In the center of the round table is a bowl of spaghetti.
-  There is a fork on the table.
-  Spaghetti should be eaten with a fork in each hand.
-  A philosopher must not starve.
-  Every philosopher must eat.
-  Philosophers do not talk to each other.
-  Philosophers do not know if other philosophers die.
-  After the philosopher finishes eating, he puts down his fork and goes to sleep.
-  After the philosopher has finished sleeping, he begins to think.
-  The simulation stops when one philosopher dies.
+- One or several philosophers sit at a round table and perform three actions. (Eating, thinking, sleeping).
+- If you are doing one action, you are not doing the rest.
+- In the center of the round table is a bowl of spaghetti.
+- There is a fork on the table.
+- Spaghetti should be eaten with a fork in each hand.
+- A philosopher must not starve.
+- Every philosopher must eat.
+- Philosophers do not talk to each other.
+- Philosophers do not know if other philosophers die.
+- After the philosopher finishes eating, he puts down his fork and goes to sleep.
+- After the philosopher has finished sleeping, he begins to think.
+- The simulation stops when one philosopher dies.
 
 - Arguments are given in the following order
   - Nubmer_of_philosophers : number of philosophers, number of forks.
